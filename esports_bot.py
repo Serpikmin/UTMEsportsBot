@@ -2,7 +2,7 @@ import os
 import string
 import discord
 from discord.ext import commands
-from dotenv import load_doten
+from dotenv import load_dotenv
 import copy
 import re
 from datetime import datetime, timedelta
