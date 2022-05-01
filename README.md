@@ -1,6 +1,12 @@
 # UTMEsportsBot
 
-A bot that has features to help with the day-to-day interactions in the UTM Esports server!
+A bot that has features to help with the day-to-day interactions in the UTM Esports server! 
+Contact us on Discord if there are any inqueries.
+Discord Tags:
+malding#0542
+Serp#8010
+Vanilla#5449
+Wonton#7863
 
 # Commands
 ## !dustloop [character] [move]
