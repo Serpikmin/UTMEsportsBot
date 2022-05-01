@@ -17,7 +17,7 @@ Example usages:
 
 You can enter in your lobby code to add to the list, someone can then type !ggstlobby to get a list of all currently available lobbies to join. 
 
-## !start_t [name|name|...name]
+## !start_t [name|name|...|name]
 
 Starts a tournament with n people, with each pair of people being designated to a group to play against.
 
