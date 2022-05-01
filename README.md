@@ -3,7 +3,7 @@
 A bot that has features to help with the day-to-day interactions in the UTM Esports server!
 
 # Commands
-!dustloop [character] [move]
+## !dustloop [character] [move]
 
 Shows the move data for the given character's move from Guilty Gear Strive's Dustloop page
 
@@ -13,6 +13,6 @@ Example usages:
 
 !dustloop Faust 632146H
 
-!ggstlobby [code]
+## !ggstlobby [code]
 
 You can enter in your lobby code to add to the list, someone can then type !ggstlobby to get a list of all currently available lobbies to join. 
