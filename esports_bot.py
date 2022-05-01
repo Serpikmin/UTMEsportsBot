@@ -1,3 +1,4 @@
+from cmath import e
 import os
 import string
 import discord
@@ -6,7 +7,7 @@ from dotenv import load_dotenv
 import copy
 import re
 from datetime import datetime, timedelta
-from fetchtest import main
+from fetchtest import search_charatcer
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -32,10 +33,9 @@ totalgames = 0;
 ready = False;
 
 class Commands(commands.Cog):    # Class storing all the commands of the bot
-    @commands.command(name='hello')
-    async def hello(self, ctx):
-        name = ctx.author.name
-        await ctx.send("Hello {}!".format(name))
+    @commands.command(name='ping')
+    async def ping(self, ctx):
+        await ctx.send("pong")
 
     @commands.command(name='ping')
     async def ping(self, ctx, id):
@@ -103,9 +103,9 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
             await ctx.send("Invalid format")
         else:
             try:
-                await ctx.send(main("{} {}".format(char, move)))
-            except:
-                await ctx.send("Something went wrong!")
+                await ctx.send(embed=search_charatcer(char, move))
+            except Exception as e:
+                await ctx.send('Error: Move not found!')
 
     @commands.command(name='ggstlobby')   # Display all current lobbies, or make a new one if given an arg
     async def ggstlobby(self, ctx, lobby_code=None):
@@ -130,6 +130,12 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
             new_lobby = Lobby(lobby_code, ctx.author.name)
             current_lobbies.add(new_lobby)
             await ctx.send('Lobby Added!')
+
+    @commands.command(name='help')
+    async def help(self, ctx):
+        await ctx.send("```COMMANDS:\nhelp: display this message\n\nggstlobby: lists all currently registered lobbies, or registers a new one.  To see all lobbies type this without arguments, and to add a lobby use \"!ggstlobby <lobbyname>\"\n\ndustloop: displays a characters frame data for a specific move, taken from dustloop. Example: \"!dustloop nago 632146h\".\nSome names and inputs have aliases```")
+
+    
 
 bot.add_cog(Commands())     # Adding the commands to the bot
 bot.run(TOKEN)              # This runs the bot
