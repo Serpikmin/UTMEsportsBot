@@ -12,3 +12,7 @@ Example usages:
 !dustloop Sol 2K
 
 !dustloop Faust 632146H
+
+!ggstlobby [code]
+
+You can enter in your lobby code to add to the list, someone can then type !ggstlobby to get a list of all currently available lobbies to join. 
