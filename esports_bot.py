@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
+from fetchtest import main
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -13,7 +14,7 @@ class Lobby:   # Class to store lobby information
         self.lobby_code = lobby_code
         self.lobby_time = datetime.now()  # Track when lobby was created
         self.creator = creator_name
-    
+
     def get_code(self) -> string:
         return self.lobby_code
 
@@ -29,9 +30,19 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
         name = ctx.author.name
         await ctx.send("Hello {}!".format(name))
 
+    @commands.command(name='dustloop')
+    async def dustloop(self, ctx, char=None, move=None):
+        if char is None or move is None:
+            await ctx.send("Invalid format")
+        else:
+            try:
+                await ctx.send(main("{} {}".format(char, move)))
+            except:
+                await ctx.send("Something went wrong!")
+
     @commands.command(name='ggstlobby')   # Display all current lobbies, or make a new one if given an arg
     async def ggstlobby(self, ctx, lobby_code=None):
-        if lobby_code == None:    # No args, just checking queue
+        if lobby_code is None:    # No args, just checking queue
             embed = discord.Embed(title='Current Lobbies')
             lobby_messages = []
             current_time = datetime.now()
@@ -40,14 +51,14 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                     current_lobbies.remove(lobby)
                 else:
                     lobby_messages.append('**{}** created by {} at {}:{} on {}/{}'.format(lobby.lobby_code, lobby.creator, lobby.lobby_time.hour, lobby.lobby_time.minute, lobby.lobby_time.month, lobby.lobby_time.day))
-            
+
             if current_lobbies == set():
                 lobby_messages.append('No lobbies right now :(')
 
             embed_val = '\n'.join(lobby_messages)
             embed.add_field(name='Guilty Gear Strive:', value=embed_val, inline=False)
             await ctx.send(embed=embed)
-        
+
         else:   # Arg, adding to queue
             new_lobby = Lobby(lobby_code, ctx.author.name)
             current_lobbies.add(new_lobby)
