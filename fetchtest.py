@@ -54,6 +54,13 @@ def main(command: str):
                    "Giovanna": ['gio', 'giovanna'],
                    "Goldlewis_Dickinson": ['gl', 'gld,' 'gold', 'goldlewis',
                                            'goldlewis-dickinson']}
+    numpad_shorthands = {
+        "426H": "41236H", "624H": "63214H", "248H": "21478H", "842H": "87412H",
+        "268H": "23698H", "862H": "89632H", "684H": "69874H", "486H": "47896H",
+        "j.426H": "j.41236H", "j.624H": "j.63214H", "j.248H": "j.21478H",
+        "j.842H": "j.87412H", "j.268H": "j.23698H", "j.862H": "j.89632H",
+        "j.684H": "j.69874H", "j.486H": "j.47896H"
+    }
     '''
     Find the right URL for the character on the frame_data page.
     '''
@@ -62,6 +69,8 @@ def main(command: str):
         if name in character_dictionary[key]:
             character_name = key
             break
+    if move in numpad_shorthands:
+        move = numpad_shorthands[move]
 
     if character_name != "BLANK":
         #perform https request
