@@ -2,6 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+import copy
 import re
 
 
@@ -37,9 +38,11 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                 global players
                 players = brackets.split("/") # stores players in a list
                 global nextround
-                nextround = [None] * (len(players)//2) # how many matches there will be next round
+                nextround = [None] * (len(players)//2)
+                # how many matches there will be next round
                 global matches
-                matches = zip(players[::2], players[1::2]) # pairs up players and stores pairs in a tuple
+                matches = zip(players[::2], players[1::2])
+                # pairs up players and stores pairs in a tuple
                 await ctx.send("Tournament Started")
             else:
                 await ctx.send("Usage Format: (Discord Name)#(numbers)|+")
@@ -51,7 +54,7 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                 await ctx.send("There's no tournament")
             else:
                 if name in players:
-                    nextround[groupnumber - 1] = name # ctx.author.id this has issues when players complete their matches out of order of the bracket
+                    nextround[groupnumber - 1] = name
                     if len(nextround) == 1 and None not in nextround:
                         await ctx.send("We have a winner")
                     else:
@@ -60,7 +63,6 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                         global ready
                         ready = True
                         await ctx.send("Next round is ready")
-                    # await ctx.send("{}".format(nextround))
                 else:
                     await ctx.send("You're not in the tournament")
 
@@ -69,18 +71,26 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
         global ready
         global players
         global matches
+        global nextround
         if ready == True:
             matches = zip(nextround[::2], nextround[1::2])
             for match in matches:
-                await ctx.send("<@{player1}> and <@{player2}>, Group {group}".format(player1 = match[0], player2
+                await ctx.send("{player1} and {player2}, Group {group}".format(player1 = match[0], player2
                  = match[1], group = 1))
             ready = False
-            players.deepcopy()
+            players = copy.deepcopy(nextround)
             nextround.clear()
-            print(players)
+            nextround = [None] * (len(players)//2)
         else:
             await ctx.send("Next round is not ready yet")
 
+"""
+!start_t a#1111/b#2222/c#3333/d#4444
+!win a#1111 1
+!win d#4444 2
+!nextround_start
+!win a#1111 1
+"""
 
 bot.add_cog(Commands())     # Adding the commands to the bot
 bot.run(TOKEN)              # This runs the bot
