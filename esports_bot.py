@@ -97,13 +97,6 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
         else:
             await ctx.send("Next round is not ready yet")
 
-"""
-!start_t a#1111/b#2222/c#3333/d#4444
-!win a#1111 1
-!win d#4444 2
-!nextround_start
-!win a#1111 1
-"""
     @commands.command(name='dustloop')
     async def dustloop(self, ctx, char=None, move=None):
         if char is None or move is None:
