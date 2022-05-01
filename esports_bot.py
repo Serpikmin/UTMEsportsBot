@@ -23,6 +23,11 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
         name = ctx.author.name
         await ctx.send("Hello {}!".format(name))
 
+    @commands.command(name='ping')
+    async def ping(self, ctx, id):
+        myid = '<@{}>'.format(id)
+        await ctx.send(' %s is the best' % myid)
+
     @commands.command(name='start_t')
     async def start_t(self, ctx, brackets=None):
         if brackets == None:
@@ -46,7 +51,7 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                 await ctx.send("There's no tournament")
             else:
                 if name in players:
-                    nextround[groupnumber - 1] = name # this has issues when players complete their matches out of order of the bracket
+                    nextround[groupnumber - 1] = name # ctx.author.id this has issues when players complete their matches out of order of the bracket
                     if len(nextround) == 1 and None not in nextround:
                         await ctx.send("We have a winner")
                     else:
@@ -59,16 +64,20 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                 else:
                     await ctx.send("You're not in the tournament")
 
-
-
     @commands.command(name='nextround_start')
     async def nextround_start(self, ctx):
+        global ready
+        global players
+        global matches
         if ready == True:
-            global matches
             matches = zip(nextround[::2], nextround[1::2])
             for match in matches:
-                await ctx.send("@{player1} and @{player2}".format(player1 = match[0], player2
-                 = match[1]))
+                await ctx.send("<@{player1}> and <@{player2}>, Group {group}".format(player1 = match[0], player2
+                 = match[1], group = 1))
+            ready = False
+            players.deepcopy()
+            nextround.clear()
+            print(players)
         else:
             await ctx.send("Next round is not ready yet")
 
