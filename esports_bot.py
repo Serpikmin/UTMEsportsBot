@@ -133,7 +133,7 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
 
     @commands.command(name='help')
     async def help(self, ctx):
-        await ctx.send("```COMMANDS:\nhelp: display this message\n\nggstlobby: lists all currently registered lobbies, or registers a new one.  To see all lobbies type this without arguments, and to add a lobby use \"!ggstlobby <lobbyname>\"\n\ndustloop: displays a characters frame data for a specific move, taken from dustloop. Example: \"!dustloop nago 632146h\".\nSome names and inputs have aliases```")
+        await ctx.send("```COMMANDS:\nhelp: display this message\n\nggstlobby: lists all currently registered lobbies, or registers a new one.  To see all lobbies type this without arguments, and to add a lobby use \"!ggstlobby <lobbyname>\"\n\ndustloop: displays a characters frame data for a specific move, taken from dustloop. Example: \"!dustloop nago 632146h\".\nSome names and inputs have aliases\n\nt_start: todo\n\nwin: todo\n\nnextround_start: todo```")
 
     
 
