@@ -15,6 +15,7 @@ players = []
 matches = ()
 nextround = []
 totalgames = 0;
+ready = False;
 
 class Commands(commands.Cog):    # Class storing all the commands of the bot
     @commands.command(name='hello')
@@ -22,10 +23,10 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
         name = ctx.author.name
         await ctx.send("Hello {}!".format(name))
 
-    @commands.command(name='start-t')
-    async def start(self, ctx, brackets=None):
+    @commands.command(name='start_t')
+    async def start_t(self, ctx, brackets=None):
         if brackets == None:
-            await ctx.send("Usage Format: Discord Name#(numbers)|+")
+            await ctx.send("Usage Format: (Discord Name)#(numbers)|+")
         else:
             if re.match("^([a-zA-z]+#[0-9][0-9][0-9][0-9]/)+([a-zA-z]+#[0-9][0-9][0-9][0-9])$", brackets):
                 global players
@@ -33,23 +34,37 @@ class Commands(commands.Cog):    # Class storing all the commands of the bot
                 global matches
                 matches = zip(players[::2], players[1::2])
                 global nextround
-                nextround = [None] * (len(players)/2)
+                nextround = [None] * (len(players)//2)
                 await ctx.send("Tournament Started")
             else:
-                await ctx.send("Usage Format: Discord Name#(numbers)|+")
+                await ctx.send("Usage Format: (Discord Name)#(numbers)|+")
 
     @commands.command(name='win')
-    async def start(self, ctx, name=None):
+    async def win(self, ctx, name=None):
             if matches == ():
                 await ctx.send("There's no tournament")
             else:
-                if players.index(name):
+                if name in players:
                     nextround.append(name)
                     await ctx.send("Congrats {}, wait for your next match".format(name))
                 else:
                     await ctx.send("You're not in the tournament")
             if None not in nextround:
+                global ready
+                ready = True
                 await ctx.send("Next round is ready")
+            if len(nextround) == 1:
+                await ctx.send("We have a winner")
+
+    @commands.command(name='nextround_start')
+    async def nextround_start(self, ctx):
+        if ready == True:
+            global matches
+            matches = zip(nextround[::2], nextround[1::2])
+            for match in matches:
+                await ctx.send("@{} and @{}".format(match[0], match[1]))
+        else:
+            await ctx.send("Next round is not ready yet")
 
 
 
