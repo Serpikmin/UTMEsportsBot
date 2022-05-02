@@ -1,7 +1,7 @@
 # UTMEsportsBot
 
 A bot that has features to help with the day-to-day interactions in the UTM Esports server! 
-Contact us on Discord if there are any inqueries.
+Contact us on Discord if there are any inquires.
 
 ### Discord Tags
 malding#0542,
